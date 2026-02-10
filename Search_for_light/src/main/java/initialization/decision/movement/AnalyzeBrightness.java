@@ -1,9 +1,14 @@
-package initialization;
+package initialization.decision.movement;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class BrightnessComparison {
+public class AnalyzeBrightness {
+	
+	static double thresholdLeft = -1;
+	static double thresholdCentre = -1;
+	static double thresholdRight = -1;
+	
 	public static void main(String[] args) throws Exception {
 
 		BufferedImage img = ImageIO.read(new File("C:/CS/draft/TestImage.jpg"));
@@ -51,5 +56,12 @@ public class BrightnessComparison {
 		System.out.println("Left: " + AvgLeft);
 		System.out.println("Centre: " + AvgCentre);
 		System.out.println("Right: " + AvgRight);
+		
+		if (thresholdLeft == -1) {
+			thresholdLeft = AvgLeft;
+			thresholdCentre = AvgCentre;
+			thresholdRight = AvgRight;
+			System.out.println("Initial intensities stored as threshold intensities");
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package initialization;
+package initialization.decision.movement;
 import swiftbot.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
