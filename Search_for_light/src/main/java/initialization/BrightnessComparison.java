@@ -6,16 +6,16 @@ import java.io.File;
 public class BrightnessComparison {
 	public static void main(String[] args) throws Exception {
 
-		BufferedImage img = ImageIO.read(new File("/data/home/pi/TestImage.jpg"));
+		BufferedImage img = ImageIO.read(new File("C:/CS/draft/TestImage.jpg"));
 
 		int width = img.getWidth();
 		int height = img.getHeight();
 
 		int columnwidth = width / 3;
 
-		int LeftBrightness = 0;
-		int CentreBrightness = 0;
-		int RightBrightness = 0;
+		double LeftBrightness = 0;
+		double CentreBrightness = 0;
+		double RightBrightness = 0;
 
 		int LeftCount = 0;
 		int CentreCount = 0;
@@ -44,8 +44,12 @@ public class BrightnessComparison {
 				}
 			}
 		}
-		double Avgleft = LeftBrightness / LeftCount;
+		double AvgLeft = LeftBrightness / LeftCount;
 		double AvgCentre = CentreBrightness / CentreCount;
 		double AvgRight = RightBrightness / RightCount;
+		
+		System.out.println("Left: " + AvgLeft);
+		System.out.println("Centre: " + AvgCentre);
+		System.out.println("Right: " + AvgRight);
 	}
 }
