@@ -1,6 +1,5 @@
 package main_code;
 import java.util.*;
-
 import swiftbot.*;
 
 public class Blueprint {
