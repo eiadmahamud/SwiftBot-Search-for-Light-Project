@@ -3,11 +3,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import swiftbot.ImageSize;
-import swiftbot.SwiftBotAPI;
+import swiftbot.*;
 
 public class Pixel_brightness {
-	public static int pixelAnalysis() throws IOException {
+
+	// These will store the brightness values after analysis
+	public static double AvgLeft;
+	public static double AvgCentre;
+	public static double AvgRight;
+
+	public static void pixelAnalysis() throws IOException {
 
 		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
 		BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
@@ -15,21 +20,16 @@ public class Pixel_brightness {
 
 		int width = img.getWidth();
 		int height = img.getHeight();
-
-		//!!!!!!!!!!!!!!
 		int columnwidth = width / 3;
 
-		// Variables to store brightness of each pixel
 		double LeftBrightness = 0;
 		double CentreBrightness = 0;
 		double RightBrightness = 0;
 
-		// Variables to count how many times a column had brighter pixels
 		int LeftCount = 0;
 		int CentreCount = 0;
 		int RightCount = 0;
 
-		// Scan every pixel for brightness in each column
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 
@@ -53,18 +53,10 @@ public class Pixel_brightness {
 				}
 			}
 		}
-		// Variables to store average brightness
-		double AvgLeft = LeftBrightness / LeftCount;
-		double AvgCentre = CentreBrightness / CentreCount;
-		double AvgRight = RightBrightness / RightCount;
-		
-		// Determine which column is brightest
-		if (AvgLeft > AvgCentre && AvgLeft > AvgRight) {
-		    return 0;   // left
-		} else if (AvgCentre > AvgLeft && AvgCentre > AvgRight) {
-		    return 1;   // centre
-		} else {
-		    return 2;   // right
-		}
+
+		// Store the averages in the static variables
+		AvgLeft = LeftBrightness / LeftCount;
+		AvgCentre = CentreBrightness / CentreCount;
+		AvgRight = RightBrightness / RightCount;
 	}
 }
