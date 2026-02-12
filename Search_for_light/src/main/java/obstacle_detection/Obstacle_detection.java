@@ -21,6 +21,7 @@ public class Obstacle_detection {
 		if (distance <= 50) {
 			
 			BlinkRed();
+			System.out.println("Obstacle detected at " + distance + " cm");
 			try {
 				StoreImage();
 			} catch (IOException e) {

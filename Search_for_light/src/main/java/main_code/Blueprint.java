@@ -1,5 +1,7 @@
 package main_code;
 import java.util.*;
+
+import obstacle_detection.Obstacle_detection;
 import swiftbot.*;
 
 public class Blueprint {
@@ -13,7 +15,11 @@ public class Blueprint {
 		
 		while (objectCount < 5 && (System.currentTimeMillis() - startTime) < five_Minutes) {
 			
-			
+			double distance = Obstacle_detection.ObsAvoid();
+			if (distance <= 50) {
+				objectCount++;
+				// Code to move either left or right
+			}
 			
 			
 			
