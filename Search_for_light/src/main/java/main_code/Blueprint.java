@@ -11,10 +11,10 @@ public class Blueprint {
 		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
 		long startTime = System.currentTimeMillis(); // Record the time when the program starts
 		int objectCount = 0; // Variable to store number of objects detected
-
 		final long five_Minutes = 5 * 60 * 1000; // Variable to store 5 minutes 
 
 		while (objectCount < 5 && (System.currentTimeMillis() - startTime) < five_Minutes) {
+			
 			// From here, the obstacle detection and avoidance program starts
 			double distance = Obstacle_detection.ObsAvoid();
 			while (distance <= 50) {
