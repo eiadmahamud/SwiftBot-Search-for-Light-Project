@@ -59,7 +59,13 @@ public class Blueprint {
 			
 			// Capture and display intensities
 			Pixel_brightness.pixelAnalysis();
-			
+			double left = Pixel_brightness.AvgLeft;
+			double centre = Pixel_brightness.AvgCentre;
+			double right = Pixel_brightness.AvgRight;
+			System.out.println("Current Average Light Intensities In Each Column...");
+			System.out.println("Left: " + left);
+			System.out.println("Centre: " + centre);
+			System.out.println("Right: " + right);
 			
 			
 
