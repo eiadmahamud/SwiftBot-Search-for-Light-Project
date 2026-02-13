@@ -1,8 +1,6 @@
 package main_code;
 import java.util.*;
-
 import initialization.decision.movement.Pixel_brightness;
-
 import java.io.IOException;
 import obstacle_detection.Obstacle_avoidance;
 import obstacle_detection.Obstacle_detection;
@@ -10,7 +8,7 @@ import seek_light.Seek_light;
 import swiftbot.*;
 
 public class Blueprint {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
 		long startTime = System.currentTimeMillis(); // Record the time when the program starts
@@ -20,7 +18,7 @@ public class Blueprint {
 		System.out.println("Welcome to SwiftBot Light-Seeking Program");
 		System.out.println("Press Button A To Start");
 		
-		
+		// Enabling button
 		final boolean[] started = {false};
 		sb.enableButton(Button.A, () -> {
 		    System.out.println("Button A Pressed");
@@ -32,34 +30,35 @@ public class Blueprint {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			} // small delay to avoid busy-waiting
+			} // Small delay to avoid busy-waiting
 		}
 
 		
 		System.out.println("Program starting...");
-		System.out.println("Button A pressed.");
 		System.out.println("Initiating Program.");
 		
-		try {
-			Pixel_brightness.pixelAnalysis();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Seek_light.initialLeft = Pixel_brightness.AvgLeft;
-		Seek_light.initialCentre = Pixel_brightness.AvgCentre;
-		Seek_light.initialRight = Pixel_brightness.AvgRight;
+		// Storing initials intensities
+		Pixel_brightness.pixelAnalysis();
+		
+		double initialLeftIntensity = Pixel_brightness.AvgLeft;
+		double initialCentreIntensity = Pixel_brightness.AvgCentre;
+		double initialRightIntensity = Pixel_brightness.AvgRight;
 
-		System.out.println("Initial brightness values:");
-		System.out.println("Left: " + Seek_light.initialLeft);
-		System.out.println("Centre: " + Seek_light.initialCentre);
-		System.out.println("Right: " + Seek_light.initialRight);
+		System.out.println("Initial brightness values...");
+		System.out.println("Left: " + initialLeftIntensity);
+		System.out.println("Centre: " + initialCentreIntensity);
+		System.out.println("Right: " + initialRightIntensity);
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
+		// Main loop
 		while (objectCount < 5 && (System.currentTimeMillis() - startTime) < five_Minutes) {
+			
+			// Capture and display intensities
+			Pixel_brightness.pixelAnalysis();
 			
 			
 			

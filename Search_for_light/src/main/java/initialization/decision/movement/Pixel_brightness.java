@@ -11,6 +11,10 @@ public class Pixel_brightness {
 	public static double AvgLeft;
 	public static double AvgCentre;
 	public static double AvgRight;
+	
+	public static double Highest;
+	public static double SecondHighest;
+	public static double Lowest;
 
 	public static void pixelAnalysis() throws IOException {
 
@@ -58,5 +62,34 @@ public class Pixel_brightness {
 		AvgLeft = LeftBrightness / LeftCount;
 		AvgCentre = CentreBrightness / CentreCount;
 		AvgRight = RightBrightness / RightCount;
+		
+		if (AvgLeft > AvgCentre && AvgLeft > AvgRight) {
+			Highest = AvgLeft;
+			if (AvgCentre > AvgRight) {
+				SecondHighest = AvgCentre;
+				Lowest = AvgRight;
+			} else {
+				SecondHighest = AvgRight;
+				Lowest = AvgCentre;
+			}
+		} else if (AvgCentre > AvgLeft && AvgCentre > AvgRight) {
+			Highest = AvgCentre;
+			if (AvgLeft > AvgRight) {
+				SecondHighest = AvgLeft;
+				Lowest = AvgRight;
+			} else {
+				SecondHighest = AvgRight;
+				Lowest = AvgLeft;
+			}
+		} else {
+			Highest = AvgRight;
+			if (AvgCentre > AvgLeft) {
+				SecondHighest = AvgCentre;
+				Lowest = AvgLeft;
+			} else {
+				SecondHighest = AvgLeft;
+				Lowest = AvgCentre;
+			}
+		}
 	}
 }
