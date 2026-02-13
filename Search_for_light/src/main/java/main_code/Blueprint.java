@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.IOException;
 import obstacle_detection.Obstacle_avoidance;
 import obstacle_detection.Obstacle_detection;
+import seek_light.Seek_light;
 import swiftbot.*;
 
 public class Blueprint {
@@ -15,20 +16,7 @@ public class Blueprint {
 
 		while (objectCount < 5 && (System.currentTimeMillis() - startTime) < five_Minutes) {
 			
-			// From here, the obstacle detection and avoidance program starts
-			double distance = Obstacle_detection.ObsAvoid();
-			while (distance <= 50) {
-				objectCount++;
-				try {
-					Obstacle_avoidance.avoidObstacle();
-				} catch (IOException e) {
-					System.out.println("Error during obstacle avoidance" + e.getMessage());
-				}
-				distance = Obstacle_detection.ObsAvoid();
-			}
-			// The obstacle detection and avoidance program ends
-
-			// The light detection program starts
+			
 			
 
 		} // main while loop ends here
