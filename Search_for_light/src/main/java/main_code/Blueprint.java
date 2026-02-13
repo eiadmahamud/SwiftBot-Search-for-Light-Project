@@ -7,6 +7,7 @@ import obstacle_detection.ObstacleHandling;
 import swiftbot.*;
 
 public class Blueprint {
+	
 	public static void main(String[] args) throws IOException {
 
 		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
@@ -43,9 +44,8 @@ public class Blueprint {
 		double initialCentreIntensity = Pixel_brightness.AvgCentre;
 		double initialRightIntensity = Pixel_brightness.AvgRight;
 
-		double HIGHEST = Pixel_brightness.Highest;
-		double SECONDHIGHEST = Pixel_brightness.SecondHighest;
-		double LOWEST = Pixel_brightness.Lowest;
+		double prevBrightest = Pixel_brightness.Highest;
+		boolean firstCycle = true;
 
 		System.out.println("Initial brightness values...");
 		System.out.println("Left: " + initialLeftIntensity);
@@ -69,6 +69,8 @@ public class Blueprint {
 			System.out.println("Left: " + left);
 			System.out.println("Centre: " + centre);
 			System.out.println("Right: " + right);
+
+			double currentBrightest = Pixel_brightness.Highest;
 
 			// Obstacle handling
 			double distance = sb.useUltrasound();
@@ -94,18 +96,55 @@ public class Blueprint {
 				}
 				continue;
 			}
+			// Light-Seeking
+			if (firstCycle) { // This is for the first time
+				firstCycle = false;
+			} else {
+				if (currentBrightest <= prevBrightest) {
+					System.out.println("No brighter light detected — wandering");
+					if (Math.random() < 0.5) {
+						System.out.println("Wandering Left");
+						MovementFunctions.left();
+					} else {
+						System.out.println("Wandering Right");
+						MovementFunctions.right();
+					}
 
+					MovementFunctions.straight();
+
+					// Update previous and continue to next cycle
+					prevBrightest = currentBrightest;
+					continue;
+				}
+			}
+			// Current brightness more than previous one
+			if (left > centre && left > right) {
+				System.out.println("Moving Left (Brightest)");
+				MovementFunctions.left();
+			}
+			else if (centre > left && centre > right) {
+				System.out.println("Moving Forward (Brightest)");
+				MovementFunctions.straight();
+			}
+			else if (right > left && right > centre) {
+				System.out.println("Moving Right (Brightest)");
+				MovementFunctions.right();
+			}
+
+			// Update previous brightness for next cycle
+			prevBrightest = currentBrightest;
 
 		} // main while loop ends here
 		System.out.println("5 objects detected within 5 minutes");
 		System.out.println("Enter TERMINATE to end program");
 
-		Scanner sc = new Scanner(System.in);
-		String input = sc.nextLine();
+		try (Scanner sc = new Scanner(System.in)) {
+			String input = sc.nextLine();
 
-		while (!input.equals("TERMINATE")) {
-			System.out.println("Invalid command. Please type TERMINATE");
-			input = sc.nextLine();
+			while (!input.equals("TERMINATE")) {
+				System.out.println("Invalid command. Please type TERMINATE");
+				input = sc.nextLine();
+			}
 		}
 		System.out.println("Program terminated");
 	}
