@@ -28,6 +28,8 @@ public class Blueprint {
 			}
 			// The obstacle detection and avoidance program ends
 
+			// The light detection program starts
+			
 
 		} // main while loop ends here
 		System.out.println("5 objects detected within 5 minutes");

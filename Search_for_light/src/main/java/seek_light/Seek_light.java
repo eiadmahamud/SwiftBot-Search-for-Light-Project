@@ -3,6 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
+import initialization.decision.movement.MovementFunctions;
 import initialization.decision.movement.Pixel_brightness;
 import swiftbot.*;
 public class Seek_light {
@@ -42,15 +43,15 @@ public class Seek_light {
 		if (brighter) {
 			// Move towards brightest direction
 			if (left > centre && left > right) {
-				sb.move(-30, 30, 300);
+				MovementFunctions.left();
 			} else if (centre > left && centre > right) {
-				sb.move(50, 50, 500);
+				MovementFunctions.straight();
 			} else {
-				sb.move(30, -30, 300);
+				MovementFunctions.right();
 			}
 		} else {
-			System.out.println("Not brighter - wandering");
-			sb.move(40, -40, 400);
+			// Wander around for light
+			sb.move(40, -40, 1000);
 		}
 		// Update previous values
 		prevLeft = left;

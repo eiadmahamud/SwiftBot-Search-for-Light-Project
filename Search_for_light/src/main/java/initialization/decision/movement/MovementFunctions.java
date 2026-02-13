@@ -12,7 +12,6 @@ public class MovementFunctions {
 		sb1.setUnderlight(Underlight.BACK_LEFT, green);
 		sb1.setUnderlight(Underlight.BACK_RIGHT, green);
 		sb1.move(-30, 30, 300);
-		sb1.move(50, 50, 1000);
 		sb1.disableUnderlights();
 	}
 	//Function to move straight
@@ -34,7 +33,6 @@ public class MovementFunctions {
 		sb3.setUnderlight(Underlight.BACK_LEFT, green);
 		sb3.setUnderlight(Underlight.BACK_RIGHT, green);
 		sb3.move(30, -30, 300);
-		sb3.move(50, 50, 1000);
 		sb3.disableUnderlights();
 	}
 }
