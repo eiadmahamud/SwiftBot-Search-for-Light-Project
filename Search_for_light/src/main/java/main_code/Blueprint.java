@@ -1,5 +1,8 @@
 package main_code;
 import java.util.*;
+
+import initialization.decision.movement.Pixel_brightness;
+
 import java.io.IOException;
 import obstacle_detection.Obstacle_avoidance;
 import obstacle_detection.Obstacle_detection;
@@ -13,7 +16,49 @@ public class Blueprint {
 		long startTime = System.currentTimeMillis(); // Record the time when the program starts
 		int objectCount = 0; // Variable to store number of objects detected
 		final long five_Minutes = 5 * 60 * 1000; // Variable to store 5 minutes 
+		
+		System.out.println("Welcome to SwiftBot Light-Seeking Program");
+		System.out.println("Press Button A To Start");
+		
+		
+		final boolean[] started = {false};
+		sb.enableButton(Button.A, () -> {
+		    System.out.println("Button A Pressed");
+		    started[0] = true;
+		});
+		System.out.println("Waiting for user to press Button A...");
+		while (!started[0]) {
+		    try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} // small delay to avoid busy-waiting
+		}
 
+		
+		System.out.println("Program starting...");
+		System.out.println("Button A pressed.");
+		System.out.println("Initiating Program.");
+		
+		try {
+			Pixel_brightness.pixelAnalysis();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Seek_light.initialLeft = Pixel_brightness.AvgLeft;
+		Seek_light.initialCentre = Pixel_brightness.AvgCentre;
+		Seek_light.initialRight = Pixel_brightness.AvgRight;
+
+		System.out.println("Initial brightness values:");
+		System.out.println("Left: " + Seek_light.initialLeft);
+		System.out.println("Centre: " + Seek_light.initialCentre);
+		System.out.println("Right: " + Seek_light.initialRight);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		while (objectCount < 5 && (System.currentTimeMillis() - startTime) < five_Minutes) {
 			
 			
