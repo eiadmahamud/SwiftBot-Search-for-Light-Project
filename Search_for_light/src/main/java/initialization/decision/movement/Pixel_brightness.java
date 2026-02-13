@@ -12,9 +12,15 @@ public class Pixel_brightness {
 	public static double AvgCentre;
 	public static double AvgRight;
 	
+	// These will hold the highest, second-highest and lowest intensities
 	public static double Highest;
 	public static double SecondHighest;
 	public static double Lowest;
+	
+	// These will store the highest in each column throughout the process
+	public static double HighestLeft = 0;
+	public static double HighestCentre = 0;
+	public static double HighestRight = 0;
 
 	public static void pixelAnalysis() throws IOException {
 
@@ -63,6 +69,7 @@ public class Pixel_brightness {
 		AvgCentre = CentreBrightness / CentreCount;
 		AvgRight = RightBrightness / RightCount;
 		
+		// Conditions which determine highest, second-highest and lowest intensities
 		if (AvgLeft > AvgCentre && AvgLeft > AvgRight) {
 			Highest = AvgLeft;
 			if (AvgCentre > AvgRight) {
@@ -90,6 +97,17 @@ public class Pixel_brightness {
 				SecondHighest = AvgLeft;
 				Lowest = AvgCentre;
 			}
+		}
+		
+		// Highest in each column
+		if (AvgLeft > HighestLeft) {
+			HighestLeft = AvgLeft;
+		}
+		if (AvgCentre > HighestCentre) {
+			HighestCentre = AvgCentre;
+		}
+		if (AvgRight > HighestRight) {
+			HighestRight = AvgRight;
 		}
 	}
 }
