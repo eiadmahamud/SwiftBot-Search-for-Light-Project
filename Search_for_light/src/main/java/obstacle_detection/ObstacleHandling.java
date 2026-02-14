@@ -10,7 +10,7 @@ public class ObstacleHandling {
 
 	static int Count = 0;
 
-	public static void HandleObstacle() {
+	public static String HandleObstacle() {
 
 		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
 
@@ -41,5 +41,6 @@ public class ObstacleHandling {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return location;
 	}
 }

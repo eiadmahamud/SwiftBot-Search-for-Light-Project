@@ -47,6 +47,13 @@ public class Blueprint {
 
 		double prevBrightest = Pixel_brightness.Highest;
 		boolean firstCycle = true;
+		
+		// Logging variables
+		double brightestEver = prevBrightest;
+		int lightDetectionCount = 0;
+		String lightDetectionHistory = "";
+		String movementHistory = "";
+		String savedImageLocations = "";
 
 		System.out.println("Initial brightness values...");
 		System.out.println("Left: " + initialLeftIntensity);
@@ -76,7 +83,8 @@ public class Blueprint {
 			// Obstacle handling
 			double distance = sb.useUltrasound();
 			if (distance < 50) {
-				ObstacleHandling.HandleObstacle();
+				String imgPath = ObstacleHandling.HandleObstacle();
+				savedImageLocations += imgPath + "\n";
 				System.out.println("WARNING! Obstacle Ahead At: " + distance + " cm!");
 				objectCount++;
 
