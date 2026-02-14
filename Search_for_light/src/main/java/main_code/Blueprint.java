@@ -2,6 +2,7 @@ package main_code;
 import java.util.*;
 import initialization.decision.movement.MovementFunctions;
 import initialization.decision.movement.Pixel_brightness;
+import java.io.FileWriter;
 import java.io.IOException;
 import obstacle_detection.ObstacleHandling;
 import swiftbot.*;
@@ -146,6 +147,16 @@ public class Blueprint {
 				input = sc.nextLine();
 			}
 		}
+		
+		// Logging
+		try {
+			FileWriter writer = new FileWriter("SwiftBot_Log.txt");
+			writer.write("!!!!! SwiftBot Journey Log !!!!!");
+			
+ 		} catch (IOException e) {
+ 			System.out.println("Error Writing Log File");
+ 		}
+		
 		System.out.println("Program terminated");
 	}
 }
