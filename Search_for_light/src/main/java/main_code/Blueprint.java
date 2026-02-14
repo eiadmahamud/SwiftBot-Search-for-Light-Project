@@ -15,8 +15,11 @@ public class Blueprint {
 		int objectCount = 0; // Variable to store number of objects detected
 		final long five_Minutes = 5 * 60 * 1000; // Variable to store 5 minutes 
 		
-		System.out.println("Welcome to SwiftBot Light-Seeking Program");
-		System.out.println("Press Button A To Start");
+		System.out.println("+-------------------------------------------+");
+		System.out.println("| Welcome to SwiftBot Light-Seeking Program |");
+		System.out.println("+-------------------------------------------+");
+		System.out.println();
+		System.out.println("Press Button \"A\" To Start");
 		
 		// Enabling button
 		final boolean[] started = {false};
@@ -54,10 +57,13 @@ public class Blueprint {
 		String movementHistory = "";
 		String savedImageLocations = "";
 		
-		System.out.println("Initial brightness values...");
-		System.out.println("Left: " + initialLeftIntensity);
-		System.out.println("Centre: " + initialCentreIntensity);
-		System.out.println("Right: " + initialRightIntensity);
+		System.out.println("-----------------------------------------------");
+		System.out.println("|          Initial Brightness Levels          |");
+		System.out.println("-----------------------------------------------");
+		System.out.println(" Left   : " + initialLeftIntensity + "       ");
+		System.out.println(" Centre : " + initialCentreIntensity + "     ");
+		System.out.println(" Right  : " + initialRightIntensity + "      ");
+		System.out.println("-----------------------------------------------");
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
