@@ -15,9 +15,9 @@ public class Blueprint {
 		int objectCount = 0; // Variable to store number of objects detected
 		final long five_Minutes = 5 * 60 * 1000; // Variable to store 5 minutes 
 		
-		System.out.println("+-------------------------------------------+");
+		System.out.println("+===========================================+");
 		System.out.println("| Welcome to SwiftBot Light-Seeking Program |");
-		System.out.println("+-------------------------------------------+");
+		System.out.println("+===========================================+");
 		System.out.println();
 		System.out.println("Press Button \"A\" To Start");
 		
@@ -36,7 +36,7 @@ public class Blueprint {
 			} // Small delay to avoid busy-waiting
 		}
 		
-		System.out.println("Initiating Program.");
+		System.out.println("Initiating Program...");
 		
 		// Storing initials intensities
 		Pixel_brightness.pixelAnalysis();
@@ -57,13 +57,13 @@ public class Blueprint {
 		String movementHistory = "";
 		String savedImageLocations = "";
 		
-		System.out.println("-----------------------------------------------");
+		System.out.println("===============================================");
 		System.out.println("|          Initial Brightness Levels          |");
-		System.out.println("-----------------------------------------------");
-		System.out.println(" Left   : " + initialLeftIntensity + "       ");
-		System.out.println(" Centre : " + initialCentreIntensity + "     ");
-		System.out.println(" Right  : " + initialRightIntensity + "      ");
-		System.out.println("-----------------------------------------------");
+		System.out.println("===============================================");
+		System.out.println(" Left   : " + initialLeftIntensity);
+		System.out.println(" Centre : " + initialCentreIntensity);
+		System.out.println(" Right  : " + initialRightIntensity);
+		System.out.println("===============================================");
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -90,7 +90,9 @@ public class Blueprint {
 			if (distance < 50) {
 				String imgPath = ObstacleHandling.HandleObstacle();
 				savedImageLocations += imgPath + "\n";
-				System.out.println("WARNING! Obstacle Ahead At: " + distance + " cm!");
+				System.out.println("========================================");
+				System.out.println("       WARNING: OBSTACLE AT " + distance);
+				System.out.println("========================================");
 				objectCount++;
 				
 				if (left > right) {
@@ -186,14 +188,16 @@ public class Blueprint {
 		long endTime = System.currentTimeMillis(); // logging variable
 		long duration = endTime - startTime; // logging variable
 		
-		System.out.println("5 objects detected within 5 minutes");
-		System.out.println("Enter TERMINATE to end program");
+		System.out.println("=============== ALERT ===============");
+    	System.out.println("   5 Objects Detected in 5 Minutes   ");
+    	System.out.println("=====================================");
+		System.out.println("Enter \"TERMINATE\" to end program");
 		
 		try (Scanner sc = new Scanner(System.in)) {
 			String input = sc.nextLine();
 			
 			while (!input.equals("TERMINATE")) {
-				System.out.println("Invalid command. Please type TERMINATE");
+				System.out.println("Invalid command. Please type \"TERMINATE\"");
 				input = sc.nextLine();
 			}
 		}
@@ -237,6 +241,8 @@ public class Blueprint {
 		    System.out.println("Error Writing Log File");
 		}
 		
-		System.out.println("Program terminated");
+		System.out.println("=================================");
+		System.out.println("|        Program Terminated     |");
+		System.out.println("=================================");
 	}
 }
