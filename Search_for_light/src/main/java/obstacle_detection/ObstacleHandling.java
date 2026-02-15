@@ -35,7 +35,7 @@ public class ObstacleHandling {
 		// Capturing and storing the image
 		BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
 		Count++;
-		String location = "/data/home/pi/TestImage" + Count +".jpg";
+		String location = "/data/home/pi/Object" + Count +".jpg";
 		try {
 			ImageIO.write(img, "jpg", new File(location));
 		} catch (IOException e) {

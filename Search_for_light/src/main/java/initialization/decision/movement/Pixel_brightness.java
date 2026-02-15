@@ -26,7 +26,7 @@ public class Pixel_brightness {
 
 		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
 		BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
-		ImageIO.write(img, "jpg", new File("c/cs/draft/Teasimage.jpg"));
+		ImageIO.write(img, "jpg", new File("/data/home/pi/Light_test.jpg"));
 
 		int width = img.getWidth();
 		int height = img.getHeight();

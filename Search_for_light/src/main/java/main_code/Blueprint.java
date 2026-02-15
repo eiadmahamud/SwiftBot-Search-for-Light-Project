@@ -33,7 +33,7 @@ public class Blueprint {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			} // Small delay to avoid busy-waiting
+			}
 		}
 		
 		System.out.println("Initiating Program...");
