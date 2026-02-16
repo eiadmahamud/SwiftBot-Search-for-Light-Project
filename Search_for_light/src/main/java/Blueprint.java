@@ -1,4 +1,3 @@
-package main_code;
 import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;

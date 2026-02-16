@@ -1,5 +1,3 @@
-package main_code;
-
 import swiftbot.*;
 
 public class MovementFunctions {

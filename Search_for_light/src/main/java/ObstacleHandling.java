@@ -1,5 +1,3 @@
-package main_code;
-
 import swiftbot.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

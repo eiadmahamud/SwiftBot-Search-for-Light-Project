@@ -1,5 +1,3 @@
-package main_code;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
