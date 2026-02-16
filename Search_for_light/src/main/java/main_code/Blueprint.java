@@ -1,10 +1,7 @@
 package main_code;
 import java.util.*;
-import initialization.decision.movement.MovementFunctions;
-import initialization.decision.movement.Pixel_brightness;
 import java.io.FileWriter;
 import java.io.IOException;
-import obstacle_detection.ObstacleHandling;
 import swiftbot.*;
 
 public class Blueprint {

@@ -1,4 +1,5 @@
-package initialization.decision.movement;
+package main_code;
+
 import swiftbot.*;
 
 public class MovementFunctions {
