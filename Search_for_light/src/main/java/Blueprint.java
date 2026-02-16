@@ -40,12 +40,12 @@ public class Blueprint {
 		// Storing initials intensities
 		pixelAnalysis();
 
-		double initialLeftIntensity = Pixel_brightness.AvgLeft;
-		double initialCentreIntensity = Pixel_brightness.AvgCentre;
-		double initialRightIntensity = Pixel_brightness.AvgRight;
+		double initialLeftIntensity = AvgLeft;
+		double initialCentreIntensity = AvgCentre;
+		double initialRightIntensity = AvgRight;
 
 		// Variables used for comparison in wandering process
-		double prevBrightest = Pixel_brightness.Highest;
+		double prevBrightest = Highest;
 		double initialBrightest = prevBrightest;
 		boolean firstCycle = true;
 
@@ -74,15 +74,15 @@ public class Blueprint {
 
 			// Capture and display intensities
 			pixelAnalysis();
-			double left = Pixel_brightness.AvgLeft;
-			double centre = Pixel_brightness.AvgCentre;
-			double right = Pixel_brightness.AvgRight;
+			double left = AvgLeft;
+			double centre = AvgCentre;
+			double right = AvgRight;
 			System.out.println("Current Average Light Intensities In Each Column...");
 			System.out.println("Left: " + left);
 			System.out.println("Centre: " + centre);
 			System.out.println("Right: " + right);
 
-			double currentBrightest = Pixel_brightness.Highest;
+			double currentBrightest = Highest;
 
 			// Obstacle handling
 			double distance = sb.useUltrasound();
