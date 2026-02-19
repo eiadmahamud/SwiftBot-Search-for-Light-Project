@@ -77,10 +77,13 @@ public class Blueprint {
 			double left = AvgLeft;
 			double centre = AvgCentre;
 			double right = AvgRight;
-			System.out.println("Current Average Light Intensities In Each Column...");
-			System.out.println("Left: " + left);
-			System.out.println("Centre: " + centre);
-			System.out.println("Right: " + right);
+			System.out.println("+===============================================+");
+			System.out.println("|       Current Average Light Intensities       |");
+			System.out.println("+===============================================+");
+			System.out.println("| Left   : " + left);
+			System.out.println("| Centre : " + centre);
+			System.out.println("| Right  : " + right);
+			System.out.println("+===============================================+");
 
 			double currentBrightest = Highest;
 
@@ -91,7 +94,7 @@ public class Blueprint {
 					String imgPath = HandleObstacle();
 					savedImageLocations += imgPath + "\n";
 					System.out.println("========================================");
-					System.out.println("       WARNING: OBSTACLE AT " + distance);
+					System.out.println("       WARNING: OBSTACLE AT " + distance + " cm!");
 					System.out.println("========================================");
 					objectCount++;
 
