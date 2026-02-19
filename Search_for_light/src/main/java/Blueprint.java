@@ -85,36 +85,41 @@ public class Blueprint {
 			double currentBrightest = Highest;
 
 			// Obstacle handling
-			double distance = sb.useUltrasound();
-			if (distance < 50) {
-				String imgPath = HandleObstacle();
-				savedImageLocations += imgPath + "\n";
-				System.out.println("========================================");
-				System.out.println("       WARNING: OBSTACLE AT " + distance);
-				System.out.println("========================================");
-				objectCount++;
+			try {
+				double distance = sb.useUltrasound();
+				if (distance < 50) {
+					String imgPath = HandleObstacle();
+					savedImageLocations += imgPath + "\n";
+					System.out.println("========================================");
+					System.out.println("       WARNING: OBSTACLE AT " + distance);
+					System.out.println("========================================");
+					objectCount++;
 
-				if (left > right) {
-					System.out.println("Turning Left");
-					moveLeft(); // Function called to move left
-					movementHistory += "Obstacle Avoidance: Left (turn + 1s forward)\n";
-				} else if (right > left) {
-					System.out.println("Turning Right");
-					moveRight(); // Function to move right
-					movementHistory += "Obstacle Avoidance: Right (turn + 1s forward)\n";
-				} else {
-					if (Math.random() < 0.5) {
-						System.out.println("Turning Left (Random)");
-						moveLeft();
-						movementHistory += "Obstacle Avoidance: Left (Random)\n";
+					if (left > right) {
+						System.out.println("Turning Left");
+						moveLeft(); // Function called to move left
+						movementHistory += "Obstacle Avoidance: Left (turn + 1s forward)\n";
+					} else if (right > left) {
+						System.out.println("Turning Right");
+						moveRight(); // Function to move right
+						movementHistory += "Obstacle Avoidance: Right (turn + 1s forward)\n";
 					} else {
-						System.out.println("Turning Right (Random)");
-						moveRight();
-						movementHistory += "Obstacle Avoidance: Right (Random)\n";
+						if (Math.random() < 0.5) {
+							System.out.println("Turning Left (Random)");
+							moveLeft();
+							movementHistory += "Obstacle Avoidance: Left (Random)\n";
+						} else {
+							System.out.println("Turning Right (Random)");
+							moveRight();
+							movementHistory += "Obstacle Avoidance: Right (Random)\n";
+						}
 					}
+					continue;
 				}
-				continue;
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+
 			// Light-Seeking
 			if (firstCycle) { // This is for the first time
 				firstCycle = false;
@@ -244,7 +249,7 @@ public class Blueprint {
 		System.out.println("|        Program Terminated     |");
 		System.out.println("=================================");
 	}
-	
+
 	// Function to move left
 	public static void moveLeft() {
 		SwiftBotAPI sb = SwiftBotAPI.INSTANCE;
@@ -294,36 +299,36 @@ public class Blueprint {
 
 	public static String HandleObstacle() {
 
-	    SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
+		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
 
-	    // Blink under lights red
-	    for (int i = 0; i < 4; i++) {
-	        int[] red = {255, 0, 0};
-	        sb.setUnderlight(Underlight.MIDDLE_LEFT, red);
-	        sb.setUnderlight(Underlight.MIDDLE_RIGHT, red);
-	        try {
-	            Thread.sleep(300);
-	        } catch (InterruptedException e) {
-	            e.printStackTrace();
-	        }
-	        sb.disableUnderlights();
-	        try {
-	            Thread.sleep(300);
-	        } catch (InterruptedException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		// Blink under lights red
+		for (int i = 0; i < 4; i++) {
+			int[] red = {255, 0, 0};
+			sb.setUnderlight(Underlight.MIDDLE_LEFT, red);
+			sb.setUnderlight(Underlight.MIDDLE_RIGHT, red);
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			sb.disableUnderlights();
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
-	    // Capturing and storing the image
-	    BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
-	    Count++;
-	    String location = "/data/home/pi/Object" + Count + ".jpg";
-	    try {
-	        ImageIO.write(img, "jpg", new File(location));
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    return location;
+		// Capturing and storing the image
+		BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
+		Count++;
+		String location = "/data/home/pi/Object" + Count + ".jpg";
+		try {
+			ImageIO.write(img, "jpg", new File(location));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return location;
 	}
 	// Function to take image and store average of each & peak throughout the program
 	public static double AvgLeft;
@@ -340,87 +345,87 @@ public class Blueprint {
 
 	public static void pixelAnalysis() throws IOException {
 
-	    SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
-	    BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
-	    ImageIO.write(img, "jpg", new File("/data/home/pi/Light_test.jpg"));
+		SwiftBotAPI sb = swiftbot.SwiftBotAPI.INSTANCE;
+		BufferedImage img = sb.takeStill(ImageSize.SQUARE_720x720);
+		ImageIO.write(img, "jpg", new File("/data/home/pi/Light_test.jpg"));
 
-	    int width = img.getWidth();
-	    int height = img.getHeight();
-	    int columnwidth = width / 3;
+		int width = img.getWidth();
+		int height = img.getHeight();
+		int columnwidth = width / 3;
 
-	    double LeftBrightness = 0;
-	    double CentreBrightness = 0;
-	    double RightBrightness = 0;
+		double LeftBrightness = 0;
+		double CentreBrightness = 0;
+		double RightBrightness = 0;
 
-	    int LeftCount = 0;
-	    int CentreCount = 0;
-	    int RightCount = 0;
+		int LeftCount = 0;
+		int CentreCount = 0;
+		int RightCount = 0;
 
-	    for (int x = 0; x < width; x++) {
-	        for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
 
-	            int pixels = img.getRGB(x, y);
+				int pixels = img.getRGB(x, y);
 
-	            int r = (pixels >> 16) & 0xFF;
-	            int g = (pixels >> 8) & 0xFF;
-	            int b = pixels & 0xFF;
+				int r = (pixels >> 16) & 0xFF;
+				int g = (pixels >> 8) & 0xFF;
+				int b = pixels & 0xFF;
 
-	            double Brightness = 0.2126*r + 0.7152*g + 0.0722*b;
+				double Brightness = 0.2126*r + 0.7152*g + 0.0722*b;
 
-	            if (x < columnwidth) {
-	                LeftBrightness += Brightness;
-	                LeftCount++;
-	            } else if (x < columnwidth * 2) {
-	                CentreBrightness += Brightness;
-	                CentreCount++;
-	            } else {
-	                RightBrightness += Brightness;
-	                RightCount++;
-	            }
-	        }
-	    }
+				if (x < columnwidth) {
+					LeftBrightness += Brightness;
+					LeftCount++;
+				} else if (x < columnwidth * 2) {
+					CentreBrightness += Brightness;
+					CentreCount++;
+				} else {
+					RightBrightness += Brightness;
+					RightCount++;
+				}
+			}
+		}
 
-	    AvgLeft = LeftBrightness / LeftCount;
-	    AvgCentre = CentreBrightness / CentreCount;
-	    AvgRight = RightBrightness / RightCount;
+		AvgLeft = LeftBrightness / LeftCount;
+		AvgCentre = CentreBrightness / CentreCount;
+		AvgRight = RightBrightness / RightCount;
 
-	    if (AvgLeft > AvgCentre && AvgLeft > AvgRight) {
-	        Highest = AvgLeft;
-	        if (AvgCentre > AvgRight) {
-	            SecondHighest = AvgCentre;
-	            Lowest = AvgRight;
-	        } else {
-	            SecondHighest = AvgRight;
-	            Lowest = AvgCentre;
-	        }
-	    } else if (AvgCentre > AvgLeft && AvgCentre > AvgRight) {
-	        Highest = AvgCentre;
-	        if (AvgLeft > AvgRight) {
-	            SecondHighest = AvgLeft;
-	            Lowest = AvgRight;
-	        } else {
-	            SecondHighest = AvgRight;
-	            Lowest = AvgLeft;
-	        }
-	    } else {
-	        Highest = AvgRight;
-	        if (AvgCentre > AvgLeft) {
-	            SecondHighest = AvgCentre;
-	            Lowest = AvgLeft;
-	        } else {
-	            SecondHighest = AvgLeft;
-	            Lowest = AvgCentre;
-	        }
-	    }
+		if (AvgLeft > AvgCentre && AvgLeft > AvgRight) {
+			Highest = AvgLeft;
+			if (AvgCentre > AvgRight) {
+				SecondHighest = AvgCentre;
+				Lowest = AvgRight;
+			} else {
+				SecondHighest = AvgRight;
+				Lowest = AvgCentre;
+			}
+		} else if (AvgCentre > AvgLeft && AvgCentre > AvgRight) {
+			Highest = AvgCentre;
+			if (AvgLeft > AvgRight) {
+				SecondHighest = AvgLeft;
+				Lowest = AvgRight;
+			} else {
+				SecondHighest = AvgRight;
+				Lowest = AvgLeft;
+			}
+		} else {
+			Highest = AvgRight;
+			if (AvgCentre > AvgLeft) {
+				SecondHighest = AvgCentre;
+				Lowest = AvgLeft;
+			} else {
+				SecondHighest = AvgLeft;
+				Lowest = AvgCentre;
+			}
+		}
 
-	    if (AvgLeft > HighestLeft) {
-	        HighestLeft = AvgLeft;
-	    }
-	    if (AvgCentre > HighestCentre) {
-	        HighestCentre = AvgCentre;
-	    }
-	    if (AvgRight > HighestRight) {
-	        HighestRight = AvgRight;
-	    }
+		if (AvgLeft > HighestLeft) {
+			HighestLeft = AvgLeft;
+		}
+		if (AvgCentre > HighestCentre) {
+			HighestCentre = AvgCentre;
+		}
+		if (AvgRight > HighestRight) {
+			HighestRight = AvgRight;
+		}
 	}
 }
