@@ -1,3 +1,4 @@
+package singleProgram;
 import java.util.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
