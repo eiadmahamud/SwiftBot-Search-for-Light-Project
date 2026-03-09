@@ -1,4 +1,4 @@
-package multipleClasses;
+package withAdditional;
 import java.util.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -64,6 +64,7 @@ public class MainCode {
 		System.out.println(" Centre : " + initialCentreIntensity);
 		System.out.println(" Right  : " + initialRightIntensity);
 		System.out.println("===============================================");
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -85,6 +86,7 @@ public class MainCode {
 			System.out.println("| Centre : " + centre);
 			System.out.println("| Right  : " + right);
 			System.out.println("+===============================================+");
+			printHeatmap(left, centre, right);
 
 			double currentBrightest = Highest;
 
@@ -388,7 +390,6 @@ public class MainCode {
 				}
 			}
 		}
-
 		AvgLeft = LeftBrightness / LeftCount;
 		AvgCentre = CentreBrightness / CentreCount;
 		AvgRight = RightBrightness / RightCount;
@@ -421,7 +422,6 @@ public class MainCode {
 				Lowest = AvgCentre;
 			}
 		}
-
 		if (AvgLeft > HighestLeft) {
 			HighestLeft = AvgLeft;
 		}
@@ -431,5 +431,24 @@ public class MainCode {
 		if (AvgRight > HighestRight) {
 			HighestRight = AvgRight;
 		}
+	}
+	public static void printHeatmap(double left, double centre, double right) {
+		double max = Math.max(left, Math.max(centre, right));
+		String[] cells = new String[3];
+		double[] vals = {left, centre, right};
+
+		for (int i = 0; i < 3; i++) {
+			int density = (max == 0) ? 0 : (int) Math.round((vals[i] / max) * 8);
+			int pad = (10 - density) / 2;
+			cells[i] = " ".repeat(pad) + "#".repeat(density) + " ".repeat(10 - density - pad);
+		}
+
+		System.out.println("+============+============+============+");
+		System.out.println("|    LEFT    |   CENTRE   |   RIGHT    |");
+		System.out.println("+============+============+============+");
+		for (int i = 0; i < 3; i++)
+			System.out.println("| " + cells[0] + " | " + cells[1] + " | " + cells[2] + " |");
+		System.out.printf( "+  %6.1f   +  %6.1f   +  %6.1f   +%n", left, centre, right);
+		System.out.println("+============+============+============+");
 	}
 }
