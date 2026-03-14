@@ -64,6 +64,8 @@ public class MainCode {
 		System.out.println(" Centre : " + initialCentreIntensity);
 		System.out.println(" Right  : " + initialRightIntensity);
 		System.out.println("===============================================");
+		System.out.println();
+		System.out.println();
 
 		try {
 			Thread.sleep(500);
@@ -187,6 +189,31 @@ public class MainCode {
 
 				if (currentBrightest > brightestEver) {
 					brightestEver = currentBrightest;
+				}
+			} else {
+				// tie between two or all three — pick randomly
+				int rand = (int) (Math.random() * 3);
+				if (rand == 0) {
+					System.out.println("Tie — Moving Left (Random)");
+					moveLeft();
+					movementHistory += "Tie: Left (Random)\n";
+					lightDetectionCount++;
+					lightDetectionHistory += currentBrightest + "\n";
+					if (currentBrightest > brightestEver) brightestEver = currentBrightest;
+				} else if (rand == 1) {
+					System.out.println("Tie — Moving Forward (Random)");
+					moveStraight();
+					movementHistory += "Tie: Straight (Random)\n";
+					lightDetectionCount++;
+					lightDetectionHistory += currentBrightest + "\n";
+					if (currentBrightest > brightestEver) brightestEver = currentBrightest;
+				} else {
+					System.out.println("Tie — Moving Right (Random)");
+					moveRight();
+					movementHistory += "Tie: Right (Random)\n";
+					lightDetectionCount++;
+					lightDetectionHistory += currentBrightest + "\n";
+					if (currentBrightest > brightestEver) brightestEver = currentBrightest;
 				}
 			}
 
@@ -437,8 +464,16 @@ public class MainCode {
 		String[] cells = new String[3];
 		double[] vals = {left, centre, right};
 
+		double min = Math.min(left, Math.min(centre, right));
+
 		for (int i = 0; i < 3; i++) {
-			int density = (max == 0) ? 0 : (int) Math.round((vals[i] / max) * 8);
+			int density;
+			if (max == min) {
+				density = 5; // all equal, give middle density
+			} else {
+				density = 2 + (int) Math.round(((vals[i] - min) / (max - min)) * 8);
+				density = Math.min(density, 10);
+			}
 			int pad = (10 - density) / 2;
 			cells[i] = " ".repeat(pad) + "#".repeat(density) + " ".repeat(10 - density - pad);
 		}
