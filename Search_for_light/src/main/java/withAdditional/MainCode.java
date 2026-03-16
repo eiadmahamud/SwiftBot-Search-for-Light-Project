@@ -49,6 +49,7 @@ public class MainCode {
 		double prevBrightest = Highest;
 		double initialBrightest = prevBrightest;
 		boolean firstCycle = true;
+		int cycle = 0;
 
 		// Logging variables
 		double brightestEver = prevBrightest;
@@ -77,17 +78,16 @@ public class MainCode {
 		while (objectCount < 5 && (System.currentTimeMillis() - startTime) < five_Minutes) {
 
 			// Capture and display intensities
+			cycle++;
+			long timeLeft = (five_Minutes - (System.currentTimeMillis() - startTime)) / 1000;
+			System.out.println();
+			System.out.println("+=============================================+");
+			System.out.println("| Cycle: " + cycle + "          Time Left: " + timeLeft + "s  |");
+			System.out.println("+=============================================+");
 			pixelAnalysis();
 			double left = AvgLeft;
 			double centre = AvgCentre;
 			double right = AvgRight;
-			System.out.println("+===============================================+");
-			System.out.println("|       Current Average Light Intensities       |");
-			System.out.println("+===============================================+");
-			System.out.println("| Left   : " + left);
-			System.out.println("| Centre : " + centre);
-			System.out.println("| Right  : " + right);
-			System.out.println("+===============================================+");
 			printHeatmap(left, centre, right);
 
 			double currentBrightest = Highest;
@@ -125,7 +125,11 @@ public class MainCode {
 					continue;
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+			    System.out.println("=========================================");
+			    System.out.println("  WARNING: Ultrasound Failed - Possible  ");
+			    System.out.println("  Soft Surface Detected (e.g. Carpet)    ");
+			    System.out.println("  Continuing Program...                  ");
+			    System.out.println("=========================================");
 			}
 
 			// Light-Seeking
@@ -133,7 +137,7 @@ public class MainCode {
 				firstCycle = false;
 			} else {
 				if (currentBrightest <= prevBrightest) {
-					System.out.println("No brighter light detected — wandering");
+					System.out.println("No brighter light detected - wandering");
 					if (Math.random() < 0.5) {
 						System.out.println("Wandering Left");
 						moveLeft();
@@ -194,21 +198,21 @@ public class MainCode {
 				// tie between two or all three — pick randomly
 				int rand = (int) (Math.random() * 3);
 				if (rand == 0) {
-					System.out.println("Tie — Moving Left (Random)");
+					System.out.println("Tie - Moving Left (Random)");
 					moveLeft();
 					movementHistory += "Tie: Left (Random)\n";
 					lightDetectionCount++;
 					lightDetectionHistory += currentBrightest + "\n";
 					if (currentBrightest > brightestEver) brightestEver = currentBrightest;
 				} else if (rand == 1) {
-					System.out.println("Tie — Moving Forward (Random)");
+					System.out.println("Tie - Moving Forward (Random)");
 					moveStraight();
 					movementHistory += "Tie: Straight (Random)\n";
 					lightDetectionCount++;
 					lightDetectionHistory += currentBrightest + "\n";
 					if (currentBrightest > brightestEver) brightestEver = currentBrightest;
 				} else {
-					System.out.println("Tie — Moving Right (Random)");
+					System.out.println("Tie - Moving Right (Random)");
 					moveRight();
 					movementHistory += "Tie: Right (Random)\n";
 					lightDetectionCount++;
@@ -272,7 +276,7 @@ public class MainCode {
 			writer.write(savedImageLocations + "\n");
 
 			writer.close();
-			System.out.println("Log file saved as Log.txt");
+			System.out.println("Log file saved as /data/home/pi/Log.txt");
 
 		} catch (IOException e) {
 			System.out.println("Error Writing Log File");
