@@ -1,27 +1,97 @@
+SwiftBot Light-Seeking and Obstacle-Avoidance System:
+This project implements an autonomous behaviour system for the SwiftBot robotics platform. The robot uses camera-based brightness analysis and ultrasound-based obstacle detection to navigate toward the brightest light source in a room while avoiding obstacles. The system logs all movement decisions, brightness readings, obstacle encounters, and captured images.
 
-# SwiftBot Work Repository – CS1704
-Welcome to your repository!
+Overview:
+The program runs for up to five minutes or until five obstacles have been detected. During execution, the robot continuously captures images, analyses brightness levels, moves toward the brightest region, and performs avoidance manoeuvres when obstacles are detected. A detailed log file is generated at the end of the run.
 
-The CS1814 Software Implementation Assessment requires you to demonstrate sufficient aptitude in planning, managing, and tracking a non-trivial activity (LO5). This year, we will use your GitHub Classroom activity to evaluate how effectively you have met this learning outcome. 
-Working toward your coding assignment includes completing the weekly lab tasks and writing practice programs to build the necessary skills. Therefore, this repository should be used to store all of your SwiftBot-related Java work for CS1704, including:
-- Weekly lab exercises (e.g., _DoesMySwiftBotWork, Calibrate Your SwiftBot_)
--	Formative Task 2
--	Any work for Assignment 3 – CS1814 Software Implementation
+Features:
+--Light Detection and Analysis
+--Captures still images using the SwiftBot camera.
+--Divides each image into left, centre, and right regions.
+--Computes average brightness using a weighted RGB luminance formula.
+--Determines the brightest direction and moves accordingly.
+--Tracks:
+----Highest brightness detected
+----Per-cycle brightness values
+----Historical brightness readings
+--Autonomous Movement
+----Moves left, right, or straight based on brightness.
+----Implements wandering behaviour when no brighter light is detected.
+----Uses underlights to indicate movement direction.
+--Obstacle Detection and Handling
+----Uses ultrasound to detect obstacles within 50 cm.
+----Blinks red underlights when an obstacle is detected.
+----Captures and stores an image of each obstacle.
+----Performs avoidance manoeuvres (turn and forward movement).
+----Logs obstacle count and image file locations.
+--Execution Control
+----Program begins when Button A is pressed.
+----Program terminates only when the user enters the command TERMINATE.
+--Logging
+----A detailed log file is saved at:/data/home/pi/Log.txt
+----The log includes:
+------Initial brightness values
+------Brightest light detected
+------Movement history
+------Light detection history
+------Execution duration
+------Number of obstacles detected
+------Saved image locations
 
-## What you need to do:
--	You will have only one repository for CS1704.
--	Create **one Maven-enabled Java project** for the entire module. Give the project a suitable name that reflects its purpose.
--	For each new task, create **a separate class file** rather than creating additional projects. Choose an appropriate class name that reflects its purpose and makes its role in the program clear. For example, you can name each class according to its purpose, (e.g., _DoesMySwiftBotWork, CalibrateMySwiftBot, SimonSwift, TestRandomColourGenerator_).
--	For **work already completed**, copy and paste it into the Maven-enabled Java project you created, then upload the project to GitHub Classroom.
--	**Commit your work early and often**. This is good Git practice and allows us to see steady progress (LO5) rather than large uploads at the end.
+Core Logic:
+--Startup
+----Waits for Button A to be pressed.
+----Captures initial brightness values.
+----Sets timers and counters.
+--Main Loop-Runs for a maximum of five minutes or until five obstacles are detected.
 
-Regular commits also help you maintain version control, avoid data loss, and meet the activity expectation outlined in the brief.
+Each cycle:
+--Capture image and compute brightness.
+--Check ultrasound sensor.
+----If an obstacle is detected, capture an image, perform avoidance, and log the event.
+--Compare brightness values.
+----If a brighter direction is found, move toward it.
+----If not, perform wandering behaviour.
+--Log all decisions and brightness readings.
 
-## IMPORTANT
--	Work that is not pushed to this repository will not be considered when evaluating LO5.
--	Therefore, it is your responsibility to ensure your repository is up to date.
+Shutdown:
+--Waits for the user to enter TERMINATE.
+--Writes the full log file.
+--Ends the program.
 
-The purpose of this GitHub repository is only to evaluate your planning and progress towards Assignment 3 (LO5). The code (i.e., your .java files) you wish to be considered towards the CS1814 assignment must be uploaded to WiseFlow on or before the submission deadline (refer to the assignment brief for more information). In the event that you have not uploaded your code to WiseFlow, or the uploaded code is faulty, any code stored in this repository will **not** be considered a valid submission. You will **not be permitted** to access this repository during the viva.
+Requirements
+--SwiftBot API (Java)
+--Raspberry Pi 5 with SwiftBot hardware
+--Java 17 or later
+--Camera and ultrasound modules enabled
+--Write permissions for /data/home/pi/
 
-If you have any issues with Git or GitHub, please ask during the lab sessions.
+Running the Program
+--Compile:javac MainCode.java
+--Run:java MainCode
+--Press Button A on the SwiftBot to begin.
 
+Output Files:
+Obstacle Images Stored as:
+/data/home/pi/Object1.jpg
+/data/home/pi/Object2.jpg
+...
+
+Brightness Test Image:
+/data/home/pi/Light_test.jpg
+
+Execution Log:
+/data/home/pi/Log.txt
+
+Terminal Heatmap Example:
+The program prints a heatmap showing relative brightness values:
+
++============+============+============+
+|    LEFT    |   CENTRE   |   RIGHT    |
++============+============+============+
+|   ###      |     ###### |      ##    |
++  120.5     +   180.3    +   95.2     +
++============+============+============+
+
+Purpose:
+This project demonstrates autonomous decision-making, sensor integration, real-time image processing, robotics navigation strategies, and structured logging. It is suitable for coursework, robotics experimentation, and further development of autonomous robotic behaviours.
